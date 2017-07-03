@@ -14,9 +14,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: ${GH_TOKEN}
-  body: >
-    * Try hardcoded release message
-    * Bump to v0.7.0
+  body: "* Try a single line release message\n* Bump to v0.8.0"
   on:
     branch: master
     repo: ${TRAVIS_REPO_SLUG}
