@@ -9,6 +9,7 @@ cache:
 
 deploy:
   provider: releases
+  api_key: ${GH_TOKEN}
   on:
     branch: master
     repo: ${TRAVIS_REPO_SLUG}
