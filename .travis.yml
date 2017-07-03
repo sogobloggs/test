@@ -7,9 +7,14 @@ cache:
   directories:
     - node_modules
 
+before_deploy:
+  - export PREV_VERSION="$(git describe --tags --abbrev=0 --match='v[0-9]*' HEAD^)"
+  - export RELEASE_NOTES="$(git log --reverse --no-merges --format='* %s' "$PREV_VERSION"..HEAD")"
+
 deploy:
   provider: releases
   api_key: ${GH_TOKEN}
+  body: ${RELEASE_NOTES}
   on:
     branch: master
     repo: ${TRAVIS_REPO_SLUG}
