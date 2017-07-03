@@ -8,13 +8,16 @@ cache:
     - node_modules
 
 before_deploy:
-  - export PREV_VERSION="$(git describe --tags --abbrev=0 --match='v[0-9]*' HEAD^)"
-  - export RELEASE_NOTES="$(git log --reverse --no-merges --format='* %s' "$PREV_VERSION"..HEAD)"
+  - PREV_VERSION="$(git describe --tags --abbrev=0 --match='v[0-9]*' HEAD^)"
+  - RELEASE_NOTES=$"$(git log --reverse --no-merges --format='* %s' "$PREV_VERSION"..HEAD)"
+  - RELEASE_NOTES=${RELEASE_NOTES//\"/\\\"}
+  - RELEASE_NOTES=${RELEASE_NOTES//,/\,}
+  - RELEASE_NOTES=$(echo -e $(printf '%q' "$RELEASE_NOTES"))
 
 deploy:
   provider: releases
   api_key: ${GH_TOKEN}
-  body: '${RELEASE_NOTES}'
+  body: ${RELEASE_NOTES}
   on:
     branch: master
     repo: ${TRAVIS_REPO_SLUG}
