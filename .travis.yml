@@ -14,7 +14,8 @@ before_deploy:
 deploy:
   provider: releases
   api_key: ${GH_TOKEN}
-  body: "\"${RELEASE_NOTES}\""
+  body: > # this means to ignore newlines until "on:"
+    ${RELEASE_NOTES}
   on:
     branch: master
     repo: ${TRAVIS_REPO_SLUG}
