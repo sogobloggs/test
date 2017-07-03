@@ -14,8 +14,9 @@ before_deploy:
 deploy:
   provider: releases
   api_key: ${GH_TOKEN}
-  body: > # this means to ignore newlines until "on:"
-    ${RELEASE_NOTES}
+  body: >
+    * Try hardcoded release message
+    * Bump to v0.7.0
   on:
     branch: master
     repo: ${TRAVIS_REPO_SLUG}
