@@ -9,7 +9,7 @@ cache:
 
 before_deploy:
   - PREV_VERSION="$(git describe --tags --abbrev=0 --match='v[0-9]*' HEAD^)"
-  - RELEASE_NOTES=$"$(git log --reverse --no-merges --format='* %s' "$PREV_VERSION"..HEAD)"
+  - RELEASE_NOTES="$(git log --reverse --no-merges --format='* %s' "$PREV_VERSION"..HEAD)"
   - RELEASE_NOTES=${RELEASE_NOTES//\"/\\\"}
   - RELEASE_NOTES=${RELEASE_NOTES//,/\,}
   - RELEASE_NOTES=$(echo -e $(printf '%q' "$RELEASE_NOTES"))
